@@ -3,25 +3,27 @@ package hello.core.order;
 import hello.core.discount.DiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class OrderServiceImpl implements OrderService{
-
-
+@RequiredArgsConstructor
+public class OrderServiceImpl implements OrderService {
 
     private final MemberRepository memberRepository;
     // 클래스 다이어그램을 살펴보면 왜 했는지 이해할 수 있다.
 //    private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
     // 클래스 다이어그램을 살펴보면 왜 했는지 이해할 수 있다.
     private final DiscountPolicy discountPolicy;    // 이렇게 코딩을 할 경우 DIP를 철저하게 지켜 누가 들어올지 모름
-    // 확률 할인 정책 관련 주입
-    @Autowired
-    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
-        this.memberRepository = memberRepository;
-        this.discountPolicy = discountPolicy;
-    }
+    // 확률 할인 정책 관 련 주입
+
+//    @Autowired    // Autowired가 있으면 ComponentScan으로 빈을 호출할 때 자동으로 Autowired가 있는 생성자를 주입해준다.
+//    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+//        this.memberRepository = memberRepository;
+//        this.discountPolicy = discountPolicy;
+//    }
+
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
         Member member = memberRepository.findById(memberId);
